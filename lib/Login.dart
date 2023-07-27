@@ -15,6 +15,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
 
+
   var emailController=TextEditingController();
   final _formKey=GlobalKey<FormState>();
   bool isPassword=true;
@@ -92,13 +93,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   background: Colors.red,
                     label: 'login',
                     onclick:()
-                    {
+                    async {
                       if (_formKey.currentState!.validate()) {
-                        // If the form is valid, display a snackbar. In the real world,
-                        // you'd often call a server or save the information in a database.
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Processing Data')),
-                        );
+                        final SharedPreferences prefs = await SharedPreferences.getInstance();
+                        await prefs.setString('email', emailController.text);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => hellouser(
+
+                            )
+                        )
+                      );
                       }
                     },
                     radius: 14
