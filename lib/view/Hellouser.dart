@@ -20,7 +20,6 @@ class _hellouserState extends State<hellouser> {
     setState(() {
 
     });
-
   }
 
 
@@ -36,7 +35,7 @@ class _hellouserState extends State<hellouser> {
     return Scaffold(appBar: AppBar(
 
     ),
-    body: Text('welcome${email}'),
+    body: Text('welcome$email'),
     );
   }
 }

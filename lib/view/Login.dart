@@ -2,9 +2,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:untitled/Hellouser.dart';
-import 'package:untitled/Shared%20Comp.dart';
-import 'package:untitled/comp.dart';
+
+
+import 'Hellouser.dart';
+import 'comp.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -14,8 +15,11 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
-
+  Future<void> setUsername()
+  async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('email', emailController.text);
+  }
   var emailController=TextEditingController();
   final _formKey=GlobalKey<FormState>();
   bool isPassword=true;
@@ -92,11 +96,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 loginButton(
                   background: Colors.red,
                     label: 'login',
-                    onclick:()
-                    async {
+                    onclick:() async
+                    {
                       if (_formKey.currentState!.validate()) {
-                        final SharedPreferences prefs = await SharedPreferences.getInstance();
-                        await prefs.setString('email', emailController.text);
+
                         Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => hellouser(

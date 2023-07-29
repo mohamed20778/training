@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:untitled/Login.dart';
+import 'package:untitled/view/Login.dart';
+import 'package:untitled/view/titles_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         primarySwatch: Colors.blue,
       ),
-      home: const LoginScreen(),
+      home: const TitleScreen(),
     );
   }
 }
