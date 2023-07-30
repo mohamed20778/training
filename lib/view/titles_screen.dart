@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:untitled/view/cubit/title_cubit.dart';
+import 'package:untitled/view/information.dart';
 
 class TitleScreen extends StatefulWidget {
   const TitleScreen({super.key});
@@ -35,7 +36,12 @@ class _TitleScreenState extends State<TitleScreen> {
               itemCount: context.watch<TitleCubit>().titles.length,
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
-                  title: Text(context.watch<TitleCubit>().titles[index].title ?? "--"),
+                  title:InkWell(
+                    onTap: ()
+                    {
+                       Navigator.push(context, MaterialPageRoute(builder:(context)=>Information(Index:index))) ;
+                    },
+                      child: Text(context.watch<TitleCubit>().titles[index].title ?? "--")),
                 );
               },
             ):const Center(
