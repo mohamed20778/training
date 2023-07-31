@@ -12,9 +12,9 @@ class TitleService
     
     List<TitleModel>titles=[];
     Response response=await Dio().get(url);
-    print("hello");
+
     var data=response.data;
-    print(data);
+
     data.forEach((element){
       TitleModel title=TitleModel.fromJson(element);
       titles.add(title);

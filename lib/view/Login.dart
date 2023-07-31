@@ -1,4 +1,5 @@
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -8,6 +9,7 @@ import 'Hellouser.dart';
 import 'comp.dart';
 
 class LoginScreen extends StatefulWidget {
+
   const LoginScreen({super.key});
 
   @override
@@ -15,14 +17,36 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  Future<bool>login(String email,String password)
+  async {
+    try {
+      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: email,
+          password: password,
+      );
+      if(credential.user!=null)
+      {
+        return true;
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user.');
+      }
+    }
+    return false;
+  }
   Future<void> setUsername()
   async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('email', emailController.text);
   }
   var emailController=TextEditingController();
+  var passwordController=TextEditingController();
   final _formKey=GlobalKey<FormState>();
   bool isPassword=true;
+
   //IconData?suffix=IconButton(onPressed: onPressed, icon: icon);
   @override
   Widget build(BuildContext context) {
@@ -69,7 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 20,),
                 TextFormField(
-                  
+                  controller: passwordController,
                   obscureText:isPassword,
                   validator: (value)
                   {
@@ -98,15 +122,23 @@ class _LoginScreenState extends State<LoginScreen> {
                     label: 'login',
                     onclick:() async
                     {
+
                       if (_formKey.currentState!.validate()) {
+                        bool result=await login(emailController.text, passwordController.text);
+                        if(result)
+                        {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => hellouser(
 
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => hellouser(
+                              )
+                              )
+                          );
+                        }else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('login fail')));
+                        }
 
-                            )
-                        )
-                      );
                       }
                     },
                     radius: 14
