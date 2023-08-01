@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:untitled/view/Login.dart';
 import 'package:untitled/view/SignUp.dart';
+import 'package:untitled/view/firebase_user.dart';
 import 'package:untitled/view/titles_screen.dart';
 import 'firebase_options.dart';
 
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         primarySwatch: Colors.blue,
       ),
-      home: SignIn(),
+      home: const fireBaseUser(),
     );
   }
 }
